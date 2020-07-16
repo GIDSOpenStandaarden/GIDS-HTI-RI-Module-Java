@@ -4,6 +4,7 @@
 
 package nl.gidsopenstandaarden.ri.module.controller;
 
+import nl.gidsopenstandaarden.ri.module.exception.NotLoggedInException;
 import nl.gidsopenstandaarden.ri.module.valueobject.HtiUser;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,10 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 	@RequestMapping("current")
 	public HtiUser current(HttpSession session) {
-		return (HtiUser) session.getAttribute("user");
+		HtiUser user = (HtiUser) session.getAttribute("user");
+		if (user == null) {
+			throw new NotLoggedInException("No active task found");
+		}
+		return user;
 	}
 }
