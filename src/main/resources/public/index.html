@@ -22,7 +22,7 @@
     <div class="nav-wrapper indigo lighten-3">
         <a href="#" class="brand-logo">Module</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="about.html">About</a></li>
+            <li><a href="#">About</a></li>
         </ul>
     </div>
 </nav>
@@ -58,21 +58,24 @@
         <div class="row treatments">
         </div>
     </div>
-
+    <div class="row">
+        <div class="col s12 m12">
+        </div>
+    </div>
 </div>
 
 <script src="js/materialize.min.js"></script>
 <script src="js/index.js"></script>
 <script type="application/javascript">
-  window.onload = (event) => {
-    var responseHandler = (response) => {
+  window.onload = () => {
+    const responseHandler = (response) => {
       if (response.status === 403) {
-        window.location = '/'
+        window.location = '403.html'
       }
       return response.json();
     }
 
-    fetch('/api/user/current')
+    fetch('/api/user/current?_t=' + new Date().getTime())
       .then(responseHandler)
       .then(data => {
         if (data['anonymous']) {
@@ -91,7 +94,7 @@
           element.innerText = element.innerText.replace('USER_NAME', data['name'])
         });
       });
-    fetch('/api/treatment/current')
+    fetch('/api/treatment/current?_t=' + new Date().getTime())
       .then(responseHandler)
       .then(data => {
         let elements = document.querySelectorAll('.content');
